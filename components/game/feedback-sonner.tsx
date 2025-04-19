@@ -5,21 +5,18 @@ import { useEffect } from 'react'
 
 interface FeedbackToastProps {
   isCorrect: boolean
-  show: boolean
+  word: string
+  translation: string
 }
 
-export function FeedbackToast({ isCorrect, show }: FeedbackToastProps) {
+export function FeedbackToast({ isCorrect, word, translation }: FeedbackToastProps) {
   useEffect(() => {
-    if (show) {
-      toast(isCorrect ? 'Correct!' : 'Try again!', {
-        description: isCorrect
-          ? 'Well done! Loading next word...'
-          : 'Keep trying, you can do it!',
-        duration: 2000,
-        className: isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white',
-      })
+    if (isCorrect) {
+      toast.success(`Correct! ${word} means ${translation}`)
+    } else {
+      toast.error(`Incorrect. ${word} means ${translation}`)
     }
-  }, [show, isCorrect])
+  }, [isCorrect, word, translation])
 
   return null
 }
